@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+<<<<<<< HEAD
 }, {timestamps: true});
+=======
+},);
+>>>>>>> a8412a9714563661fe20c22107af3a7efea097e6
 
 const User = mongoose.model("User", userSchema);
 
