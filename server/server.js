@@ -1,8 +1,8 @@
-import express from express;
-
+import express from "express";
 const app = express();
 
+app.use(express.json());
+
 app.listen(3000, () => {
-    console.log('Server is listening');
-    
-})
+  console.log("Server is listening");
+});
