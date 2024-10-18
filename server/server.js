@@ -1,8 +1,7 @@
-import express from "express";
-import dotenv from "dotenv";
+const express = require("express");
 const app = express();
 const port = 3000;
-dotenv.config();
+require("dotenv").config();
 const mongo_uri = process.env.MONGO_URI;
 
 app.get("/", (req, res) => {
