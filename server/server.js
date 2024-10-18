@@ -1,8 +1,9 @@
-const express = require('express')
-import { connectDB } from "./utils/feature";
+import express from "express";
+import { connectDB } from "./utils/feature.js";
+import dotenv from "dotenv";
 const app = express()
 const port = 3000
-require('dotenv').config()
+dotenv.config()
 const mongo_uri=process.env.MONGO_URI
 connectDB(mongo_uri)
 
