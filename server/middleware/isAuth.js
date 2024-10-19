@@ -9,7 +9,8 @@ export const isAuth= async(req, res, next)=>{
         if(!token) return new errorHandler(401, "Please login to access this route")
         
         const verify= jwt.verify(token, process.env.JWT_SECRET_KEY)
-        req.user= verify._id
+        console.log(verify)
+        req.user= verify.id
         next()
     } catch (error) {
         next(error.message)
