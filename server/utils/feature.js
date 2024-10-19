@@ -9,7 +9,8 @@ export const connectDB = (uri) => {
     .catch((err) => {
       throw err;
     })
-    .catch((err) => {
-      throw err;
-    });
 };
+
+const cookieOptions={
+
+}

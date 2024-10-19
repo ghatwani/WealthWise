@@ -35,7 +35,14 @@ export const signIn = async (req, res, next) => {
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
     const { password: pass, ...rest } = user._doc;
-    return res.status(200).json(rest);
+    return res.status(200)
+    .cookie("WealthWise", token, {
+      maxAge: 15* 24*60*60*1000,
+      sameSite:"none",
+      httpOnly:true,
+      secure:true
+    })
+    .json(rest);
   } catch (error) {
     next(error);
   }
