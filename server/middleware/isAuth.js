@@ -1,15 +1,17 @@
 import { errorHandler } from "../utils/error.js"
+import jwt from "jsonwebtoken";
 
 export const isAuth= async(req, res, next)=>{
     try {
-        const token = req.cookie['WealthWise']
+        const WEALTHWISE='WealthWise'
+        const token = req.cookies[WEALTHWISE]
 
-        if(!token) return new errorHandler('401', "Please login to access this route")
+        if(!token) return new errorHandler(401, "Please login to access this route")
         
         const verify= jwt.verify(token, process.env.JWT_SECRET_KEY)
         req.user= verify._id
         next()
     } catch (error) {
-        next(error)
+        next(error.message)
     }
 }

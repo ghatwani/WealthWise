@@ -1,0 +1,25 @@
+Home page
+1. header : if authenticated : home, about, contact us, profile-->dashboard
+	    if not:login signup-->landing page 
+
+2. dashboard-->
+net profit/net loss, 
+transaction history upto 10, 
+bank balance,
+Check Financial insights,
+Reminders
+
+3. financial insights
+line graph sales vs months
+pie chart -profit, expense in sales
+check balance
+average sale
+
+
+4.payment tracking system
+sent request
+received request
+make cash entry
+
+5. view detailed statement
+
