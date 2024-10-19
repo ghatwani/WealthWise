@@ -17,11 +17,10 @@ export const newTransaction = async (req, res, next) => {
 };
 
 export const getAllTransactions = async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = req.params.id.toString();
   try {
     const data = await Transaction.find({ userId });
-    const result = await data.json();
-    res.send(200).json(result);
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }
@@ -31,8 +30,7 @@ export const getTransaction = async (req, res, next) => {
   const transactionId = req.params.id;
   try {
     const data = await Transaction.findById(transactionId);
-    const result = await data.json();
-    res.send(200).json(result);
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }
@@ -41,10 +39,9 @@ export const getTransaction = async (req, res, next) => {
 export const updateTransaction = async (req, res, next) => {
   const transId = req.params.id;
   const transaction = await Transaction.findById(transId);
-
-  if (transaction.userId !== req.user.id) {
-    return next(
-      new errorHandler("401", "you can only update your transaction")
+  console.log(req.user)
+  if (transaction.userId.toString() !== req.user) {
+    return next( errorHandler(401, "you can only update your transaction")
     );
   }
 
@@ -63,15 +60,15 @@ export const deleteTransaction = async (req, res, next) => {
   try {
     const transaction = await Transaction.findById(transId);
     if (!transaction) {
-      return next(new errorHandler("404", "Transaction not found!"));
+      return next(new errorHandler(404, "Transaction not found!"));
     }
-    if (transaction.userId !== req.user.id) {
+    if (transaction.userId.toString() !== req.user) {
       return next(
-        new errorHandler("401", "you can only update your transaction")
+       errorHandler(401, "you can only update your transaction")
       );
     }
     await Transaction.findByIdAndDelete(transId);
-    res.status(200).json("Transaction entry delted successfully")
+    res.status(200).json("Transaction entry deleted successfully")
   } catch (error) {
     next(error)
   }
