@@ -6,7 +6,7 @@ const requestsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    to: {
+    email: {
       type: String,
       required: true,
     },
