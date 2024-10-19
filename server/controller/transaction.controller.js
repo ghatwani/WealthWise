@@ -10,8 +10,7 @@ export const newTransaction = async (req, res, next) => {
       amount,
       description,
     });
-    const result = await data.json();
-    res.send(200).json(result);
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }
@@ -73,5 +72,7 @@ export const deleteTransaction = async (req, res, next) => {
     }
     await Transaction.findByIdAndDelete(transId);
     res.status(200).json("Transaction entry delted successfully")
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 };

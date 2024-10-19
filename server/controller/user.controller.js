@@ -38,9 +38,6 @@ export const signIn = async (req, res, next) => {
     return res.status(200)
     .cookie("WealthWise", token, {
       maxAge: 15* 24*60*60*1000,
-      sameSite:"none",
-      httpOnly:true,
-      secure:true
     })
     .json(rest);
   } catch (error) {
