@@ -1,10 +1,9 @@
-import { errorHandler } from "../utils/error.js"
+import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
-export const isAuth= async(req, res, next)=>{
-    try {
-        const WEALTHWISE='WealthWise'
-        const token = req.cookies[WEALTHWISE]
+export const isAuth = async (req, res, next) => {
+  try {
+    const token = req.cookie["WealthWise"];
 
         if(!token) return new errorHandler(401, "Please login to access this route")
         
