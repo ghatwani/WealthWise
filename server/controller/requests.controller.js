@@ -8,12 +8,12 @@ export const createRequest = async (req, res, next) => {
   try {
     const receiver = await User.findOne({ email });
     if (!receiver) {
-      return next(errorHandler(404, "User is not on WealthWise"));
+      return next(errorHandler(401, "User is not on WealthWise"));
     }
 
     if (receiver._id == userId) {
       return next(
-        errorHandler(404, "You can't send payment request to yourself")
+        errorHandler(401, "You can't send payment request to yourself")
       );
     }
     const newRequest = new Request({ userId, email, amount, deadline });
@@ -38,7 +38,7 @@ export const getRequest = async (req, res, next) => {
 export const getSingleRequest = async (req, res, next) => {
   const { reqId } = req.params;
   if (!reqId) {
-    return next(errorHandler(400, "No request found"));
+    return next(errorHandler(404, "No request found"));
   }
   try {
     const request = await Request.findOne({ _id: reqId });
