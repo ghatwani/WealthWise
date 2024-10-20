@@ -48,6 +48,18 @@ export const getSingleRequest = async (req, res, next) => {
   }
 };
 
+export const updateRequest = async (req, res, next) => {
+  const { reqId } = req.params;
+  try {
+    const request = await Request.findByIdAndUpdate(reqId, req.body, {
+      new: true,
+    });
+    res.status(200).json(request);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteRequest = async (req, res, next) => {
   const { reqId } = req.params;
   try {

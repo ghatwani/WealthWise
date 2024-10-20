@@ -39,10 +39,8 @@ export const getTransaction = async (req, res, next) => {
 export const updateTransaction = async (req, res, next) => {
   const transId = req.params.id;
   const transaction = await Transaction.findById(transId);
-  console.log(req.user)
   if (transaction.userId.toString() !== req.user) {
-    return next( errorHandler(401, "you can only update your transaction")
-    );
+    return next(errorHandler(401, "you can only update your transaction"));
   }
 
   try {
@@ -63,13 +61,11 @@ export const deleteTransaction = async (req, res, next) => {
       return next(new errorHandler(404, "Transaction not found!"));
     }
     if (transaction.userId.toString() !== req.user) {
-      return next(
-       errorHandler(401, "you can only update your transaction")
-      );
+      return next(errorHandler(401, "you can only update your transaction"));
     }
     await Transaction.findByIdAndDelete(transId);
-    res.status(200).json("Transaction entry deleted successfully")
+    res.status(200).json("Transaction entry deleted successfully");
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
