@@ -1,0 +1,24 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+/* Custom styles */
+.btn-primary {
+  @apply bg-indigo-500 text-white px-6 py-2 rounded-full hover:bg-indigo-600 transition duration-300;
+}
+
+.card {
+  @apply bg-white p-6 rounded-lg shadow-md;
+}
+
+.section-title {
+  @apply text-2xl font-bold text-gray-800 mb-4;
+}
