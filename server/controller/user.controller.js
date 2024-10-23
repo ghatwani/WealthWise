@@ -9,6 +9,10 @@ export const signUp = async (req, res, next) => {
   if (!name || !email || !password) {
     return next(errorHandler(400, "All field are required"));
   }
+  const user= await User.findOne({email})
+  if(user){
+    return next(errorHandler(401, "email already exist"));
+  }
   if (!isValidEmailFormat(email)) {
     return next(errorHandler(400, "Email is not valid"));
   }
