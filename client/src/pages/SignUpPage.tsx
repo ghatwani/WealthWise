@@ -1,26 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { UserPlus, User, Mail, Lock, Building } from "lucide-react";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { UserPlus, User, Mail, Lock, Building } from 'lucide-react';
 
 const SignUpPage: React.FC = () => {
-  const [formData, setFormData] = useState({});
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [businessName, setBusinessName] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle sign up logic here
+    console.log('Sign up with:', name, email, password, businessName);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("/api/signup", formData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = res.data;
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center px-4">
       <div
@@ -86,12 +79,7 @@ const SignUpPage: React.FC = () => {
             </div>
           </div>
           <div className="mb-6" data-aos="fade-up" data-aos-delay="800">
-            <label
-              htmlFor="businessName"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Business Name
-            </label>
+            <label htmlFor="businessName" className="block text-gray-700 text-sm font-bold mb-2">Business Name</label>
             <div className="relative">
               <input
                 type="text"
@@ -105,7 +93,7 @@ const SignUpPage: React.FC = () => {
                 size={20}
               />
             </div>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 flex items-center justify-center"
