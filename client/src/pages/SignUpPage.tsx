@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserPlus, User, Mail, Lock, Building } from 'lucide-react';
+import { UserPlus, User, Mail, Lock } from 'lucide-react';
 
 const SignUpPage: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [businessName, setBusinessName] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle sign up logic here
-    console.log('Sign up with:', name, email, password, businessName);
+    console.log('Sign up with:', name, email, password );
   };
 
   return (
@@ -61,7 +60,7 @@ const SignUpPage: React.FC = () => {
               <Lock className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
           </div>
-          <div className="mb-6" data-aos="fade-up" data-aos-delay="800">
+          {/* <div className="mb-6" data-aos="fade-up" data-aos-delay="800">
             <label htmlFor="businessName" className="block text-gray-700 text-sm font-bold mb-2">Business Name</label>
             <div className="relative">
               <input
@@ -74,7 +73,7 @@ const SignUpPage: React.FC = () => {
               />
               <Building className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 flex items-center justify-center"
