@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogIn, Mail, Lock } from "lucide-react";
 import axios from "axios";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/User/user.ts";
+import { useDispatch } from "react-redux";
 
 const SignInPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -15,13 +20,16 @@ const SignInPage: React.FC = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/signin", formData, {
+      dispatch(signInStart());
+      const res = await axios.post("/api/user/signin", formData, {
         headers: { "Content-Type": "application/json" },
       });
       const data = res.data;
-      console.log(data);
+      dispatch(signInSuccess(data));
+      navigate("/home");
     } catch (error) {
       console.log(error);
+      dispatch(signInFailure(error));
     }
   };
 
@@ -47,7 +55,6 @@ const SignInPage: React.FC = () => {
                 type="email"
                 id="email"
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={email}
                 onChange={handleChange}
                 required
               />
@@ -66,7 +73,6 @@ const SignInPage: React.FC = () => {
                 type="password"
                 id="password"
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={password}
                 onChange={handleChange}
                 required
               />

@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { UserPlus, User, Mail, Lock, Building } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserPlus, User, Mail, Lock, Building } from "lucide-react";
+import axios from "axios";
 
 const SignUpPage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [businessName, setBusinessName] = useState('');
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign up with:', name, email, password, businessName);
+    try {
+      const res = await axios.post("/api/user/signup", formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = res.data;
+      alert("signed up");
+      navigate("/signin");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -78,7 +88,7 @@ const SignUpPage: React.FC = () => {
               <Lock className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
           </div>
-          <div className="mb-6" data-aos="fade-up" data-aos-delay="800">
+          {/*<div className="mb-6" data-aos="fade-up" data-aos-delay="800">
             <label htmlFor="businessName" className="block text-gray-700 text-sm font-bold mb-2">Business Name</label>
             <div className="relative">
               <input
