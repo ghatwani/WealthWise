@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import LandingPage from './components/LandingPage';
-import SignInPage from './components/SignInPage';
-import SignUpPage from './components/SignUpPage';
-import HomePage from './components/HomePage';
+import LandingPage from './pages/LandingPage.tsx';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   useEffect(() => {
