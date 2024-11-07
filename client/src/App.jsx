@@ -7,6 +7,11 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import ChatBot from './pages/Chatbot.jsx';
+import AddTransaction from './pages/AddTransaction';
+// import AddTransactionSuccess from './pages/AddTransactionSuccess';
+import {Toaster} from 'react-hot-toast'
+// import NotificationTestPage from './pages/NotificationTestPage';
+
 
 
 function App() {
@@ -26,7 +31,11 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         {/* <Route path="/home" element={<NotificationTestPage />}/> */}
         <Route path='/chat' element={<ChatBot/>}/>
+        <Route path="/add-transaction" element={<AddTransaction />} />
+        {/* <Route path="/add-transaction-success" element={<AddTransactionSuccess />} /> */}
+        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
       </Routes>
+      <Toaster/>
     </Router>
   );
 }
