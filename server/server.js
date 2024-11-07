@@ -4,8 +4,8 @@ import userRouter from "./Routes/user.route.js";
 import TransactionRouter from "./Routes/transaction.route.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import requestRouter from "./routes/requests.route.js";
-import dashboardRouter from "./routes/dashboard.route.js";
+import requestRouter from "./Routes/requests.route.js";
+import dashboardRouter from "./Routes/dashboard.route.js";
 
 const app = express();
 const port = 3000;
