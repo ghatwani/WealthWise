@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart2, DollarSign, PieChart, TrendingUp, Shield, Award, CreditCard, Users, Zap } from 'lucide-react';
 
-const LandingPage: React.FC = () => {
+const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">

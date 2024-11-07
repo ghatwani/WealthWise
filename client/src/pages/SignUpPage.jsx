@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserPlus, User, Mail, Lock, Building } from 'lucide-react';
+import { UserPlus, User, Mail, Lock } from 'lucide-react';
 
-const SignUpPage: React.FC = () => {
+const SignUpPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [businessName, setBusinessName] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign up with:', name, email, password, businessName);
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
+    console.log('Sign up with:', name, email, password);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-400 via-blue-700 to-blue-950 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8" data-aos="zoom-in">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Create Your WealthWise Account</h2>
         <form onSubmit={handleSubmit}>
@@ -29,6 +31,7 @@ const SignUpPage: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                aria-label="Full Name"
               />
               <User className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
@@ -43,6 +46,7 @@ const SignUpPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                aria-label="Email Address"
               />
               <Mail className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
@@ -57,22 +61,9 @@ const SignUpPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                aria-label="Password"
               />
               <Lock className="absolute left-3 top-2 text-gray-400" size={20} />
-            </div>
-          </div>
-          <div className="mb-6" data-aos="fade-up" data-aos-delay="800">
-            <label htmlFor="businessName" className="block text-gray-700 text-sm font-bold mb-2">Business Name</label>
-            <div className="relative">
-              <input
-                type="text"
-                id="businessName"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                required
-              />
-              <Building className="absolute left-3 top-2 text-gray-400" size={20} />
             </div>
           </div>
           <button

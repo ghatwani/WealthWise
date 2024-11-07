@@ -9,8 +9,8 @@ export const signUp = async (req, res, next) => {
   if (!name || !email || !password) {
     return next(errorHandler(400, "All field are required"));
   }
-  const user= await User.findOne({email})
-  if(user){
+  const user = await User.findOne({ email });
+  if (user) {
     return next(errorHandler(401, "email already exist"));
   }
   if (!isValidEmailFormat(email)) {
@@ -39,11 +39,12 @@ export const signIn = async (req, res, next) => {
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
     const { password: pass, ...rest } = user._doc;
-    return res.status(200)
-    .cookie("WealthWise", token, {
-      maxAge: 15* 24*60*60*1000,
-    })
-    .json(rest);
+    return res
+      .status(200)
+      .cookie("access_token", token, {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+      })
+      .json(rest);
   } catch (error) {
     next(error);
   }

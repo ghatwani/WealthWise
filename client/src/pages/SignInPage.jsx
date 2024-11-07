@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LogIn, Mail, Lock } from 'lucide-react';
 
-const SignInPage: React.FC = () => {
+const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle sign in logic here
     console.log('Sign in with:', email, password);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-400 via-blue-700 to-blue-950 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8" data-aos="zoom-in">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Sign In to WealthWise</h2>
         <form onSubmit={handleSubmit}>
