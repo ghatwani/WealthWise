@@ -13,6 +13,11 @@ import {Toaster} from 'react-hot-toast'
 // import NotificationTestPage from './pages/NotificationTestPage';
 =======
 import ChatBot from './pages/Chatbot.jsx';
+import AddTransaction from './pages/AddTransaction';
+// import AddTransactionSuccess from './pages/AddTransactionSuccess';
+import {Toaster} from 'react-hot-toast'
+// import NotificationTestPage from './pages/NotificationTestPage';
+
 
 >>>>>>> aa8a321b9f783456aed315940abc92c872a1f17d
 
@@ -35,6 +40,9 @@ function App() {
         <Route path="/add-transaction-success" element={<AddTransactionSuccess />} />
         {/* <Route path="/home" element={<NotificationTestPage />}/> */}
         <Route path='/chat' element={<ChatBot/>}/>
+        <Route path="/add-transaction" element={<AddTransaction />} />
+        {/* <Route path="/add-transaction-success" element={<AddTransactionSuccess />} /> */}
+        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
       </Routes>
       <Toaster/>
     </Router>
