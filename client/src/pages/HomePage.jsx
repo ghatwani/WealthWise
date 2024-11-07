@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BarChart2,
   DollarSign,
@@ -12,36 +12,60 @@ import {
   Calendar,
   FileText,
   Bell,
+  Check,
   X,
+  SquareMinus,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
-  const [Notifications, setNotifications] = useState([
-    { id: 1, message: "Payment of $200 received", read: false },
-    { id: 2, message: "Your subscription will renew tomorrow", read: false },
-    { id: 3, message: "Stock ABC up by 5%", read: false },
-    { id: 4, message: "New transaction alert: $500", read: false },
+  const [notifications, setNotifications] = useState([
+    { id: 1, message: "Payment of $200 received", type: "alert", read: false },
+    {
+      id: 2,
+      message: "Payment request: $500 from Vendor",
+      type: "paymentRequest",
+      read: false,
+    },
+    {
+      id: 3,
+      message: "Your subscription will renew tomorrow",
+      type: "reminder",
+      read: false,
+    },
+    { id: 4, message: "Stock ABC up by 5%", type: "alert", read: false },
     {
       id: 5,
       message: "Investment update: New mutual fund available",
+      type: "alert",
       read: false,
     },
-    { id: 6, message: "Interest rate change for savings", read: false },
-    { id: 7, message: "Goal reached: Emergency Fund", read: false },
-    { id: 8, message: "System update scheduled for tomorrow", read: false },
+    {
+      id: 6,
+      message: "Interest rate change for savings",
+      type: "reminder",
+      read: false,
+    },
   ]);
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [autoClose, setAutoClose] = useState(true);
+
+  useEffect(() => {
+    if (isPanelOpen && autoClose) {
+      const timer = setTimeout(() => setIsPanelOpen(false), 7000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPanelOpen, autoClose]);
 
   const toggleNotificationPanel = () => {
-    // setNotificationOpen(prev => !prev);
     setIsPanelOpen(!isPanelOpen);
   };
 
   const toggleReadStatus = (id) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.map((notification) =>
+    setNotifications((prev) =>
+      prev.map((notification) =>
         notification.id === id
           ? { ...notification, read: !notification.read }
           : notification
@@ -50,8 +74,19 @@ const HomePage = () => {
   };
 
   const removeNotification = (id) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.id !== id)
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
+    );
+  };
+
+  const handlePaymentAction = (id, action) => {
+    console.log(`Payment request ${action}ed`);
+    removeNotification(id);
+  };
+
+  const markAllAsRead = () => {
+    setNotifications((prev) =>
+      prev.map((notification) => ({ ...notification, read: true }))
     );
   };
 
@@ -69,11 +104,11 @@ const HomePage = () => {
               {/* <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                 4
               </span> */}
-              {Notifications.filter((notification) => !notification.read)
+              {notifications.filter((notification) => !notification.read)
                 .length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                   {
-                    Notifications.filter((notification) => !notification.read)
+                    notifications.filter((notification) => !notification.read)
                       .length
                   }
                 </span>
@@ -91,7 +126,9 @@ const HomePage = () => {
           Welcome back, User!
         </h2>
 
+        {/* Revenue, Profit, Expenses, Growth */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
+          {/* Revenue, Profit, Expenses, Growth Cards */}
           <div className="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up">
             <DollarSign className="text-4xl text-indigo-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2 text-gray-700">
@@ -129,7 +166,6 @@ const HomePage = () => {
             <p className="text-3xl font-bold text-gray-800">+15%</p>
           </div>
         </div>
-
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -242,10 +278,12 @@ const HomePage = () => {
               Quick Actions
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <button className="flex flex-col items-center justify-center p-4 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition duration-300">
-                <CreditCard className="text-indigo-500 mb-2" />
-                <span className="text-sm font-semibold">Add Payment</span>
-              </button>
+              <Link to="/add-transaction">
+                <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition duration-300">
+                  <CreditCard className="text-indigo-500 mb-2" />
+                  <span className="text-sm font-semibold">Add Payment</span>
+                </div>
+              </Link>
               <button className="flex flex-col items-center justify-center p-4 bg-green-100 rounded-lg hover:bg-green-200 transition duration-300">
                 <Users className="text-green-500 mb-2" />
                 <span className="text-sm font-semibold">Manage Vendors</span>
@@ -268,54 +306,102 @@ const HomePage = () => {
         {isPanelOpen && (
           <motion.div
             key="notificationPanel"
-            initial={{ opacity: 0, y: 100 }} // Starts off-screen at the bottom
-            animate={{ opacity: 1, y: 0 }} // Slides up to center with full opacity
-            exit={{ opacity: 0, y: 100 }} // Slides down and fades out
-            // transition={{ type: "", stiffness: 300, damping: 25 }}
-            transition={{ type: "tween", duration: 0.5, ease: "easeInOut" }}
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]"
+            initial={{ opacity: 0, y: "100%", x: "20%", rotate: -10 }}
+            animate={{ opacity: 1, y: 0, x: 0, rotate: 0 }}
+            exit={{ opacity: 0, y: "100%", x: "20%", rotate: -10 }}
+            transition={{ duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }}
+            className="fixed bottom-0 right-0 w-full max-w-md bg-white shadow-lg z-[1000] overflow-hidden rounded-t-lg"
           >
-            <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-2xl z-[1001]">
-              <h3 className="text-lg font-bold mb-4">Notifications</h3>
-              {/* <p>Your notifications go here...</p>
-               */}
-              <ul className="max-h-64 overflow-y-auto">
-                {Notifications.length > 0 ? (
-                  Notifications.map((notification) => (
-                    <li
-                      key={notification.id}
-                      className={`border-b last:border-b-0 p-2 text-gray-600 ${
-                        notification.read
-                          ? "bg-gray-100"
-                          : "bg-blue-50 font-bold"
-                      }`}
-                      onClick={() => toggleReadStatus(notification.id)}
-                    >
-                      <span className="cursor-pointer">
-                        {notification.message}
-                      </span>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation(); // Prevent click event on the notification itself
-                          removeNotification(notification.id);
-                        }}
-                        className="text-red-600 hover:text-red-800 transition duration-300 p-1 rounded-full"
-                      >
-                        <X size={16} />
-                      </button>
-                    </li>
-                  ))
-                ) : (
-                  <p className="text-gray-500">No new notifications</p>
-                )}
-              </ul>
+            <div className="p-6 bg-indigo-500 text-white rounded-t-lg flex justify-between items-center">
+              <h3 className="text-lg font-bold">Notifications</h3>
               <button
                 onClick={toggleNotificationPanel}
-                className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition"
+                className="text-white hover:opacity-75"
               >
                 Close
               </button>
             </div>
+
+            <div className="flex justify-between items-center px-6 py-2 bg-gray-50">
+              <button
+                onClick={markAllAsRead}
+                className="text-indigo-500 hover:text-indigo-700 font-medium"
+              >
+                Mark All as Read
+              </button>
+              <label className="text-gray-500 text-sm">
+                Auto-close
+                <input
+                  type="checkbox"
+                  checked={autoClose}
+                  onChange={() => setAutoClose(!autoClose)}
+                  className="ml-2"
+                />
+              </label>
+            </div>
+
+            <ul className="p-6 space-y-4 overflow-y-auto max-h-[80vh]">
+              {notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <motion.li
+                    key={notification.id}
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className={`flex justify-between items-center p-4 rounded-lg shadow transition ${
+                      notification.read ? "bg-gray-200" : "bg-blue-50"
+                    }`}
+                  >
+                    <div
+                      onClick={() => toggleReadStatus(notification.id)}
+                      className="flex-1 cursor-pointer"
+                    >
+                      <p className="font-semibold">
+                        {notification.type === "alert" && (
+                          <span className="text-yellow-500 mr-2">⚠️</span>
+                        )}
+                        {notification.type === "paymentRequest" && (
+                          <span className="text-green-500 mr-2">💸</span>
+                        )}
+                        {notification.type === "reminder" && (
+                          <span className="text-purple-500 mr-2">🔔</span>
+                        )}
+                        {notification.message}
+                      </p>
+                    </div>
+                    {notification.type === "paymentRequest" ? (
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() =>
+                            handlePaymentAction(notification.id, "accept")
+                          }
+                          className="p-2 rounded-full bg-green-500 hover:bg-green-600 text-white"
+                        >
+                          <Check size={16} />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handlePaymentAction(notification.id, "decline")
+                          }
+                          className="p-2 rounded-full bg-red-500 hover:bg-red-600 text-white"
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => removeNotification(notification.id)}
+                        className="ml-4 text-gray-600 hover:text-black transition"
+                      >
+                        <SquareMinus size={20} />
+                      </button>
+                    )}
+                  </motion.li>
+                ))
+              ) : (
+                <p className="text-gray-500">No new notifications</p>
+              )}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

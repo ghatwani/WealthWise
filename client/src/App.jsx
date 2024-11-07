@@ -6,6 +6,9 @@ import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
+import AddTransaction from './pages/AddTransaction';
+import AddTransactionSuccess from './pages/AddTransactionSuccess';
+import {Toaster} from 'react-hot-toast'
 // import NotificationTestPage from './pages/NotificationTestPage';
 
 function App() {
@@ -23,8 +26,11 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/add-transaction" element={<AddTransaction />} />
+        <Route path="/add-transaction-success" element={<AddTransactionSuccess />} />
         {/* <Route path="/home" element={<NotificationTestPage />}/> */}
       </Routes>
+      <Toaster/>
     </Router>
   );
 }
