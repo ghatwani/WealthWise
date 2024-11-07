@@ -22,7 +22,7 @@ export const signUp = async (req, res, next) => {
     await newUser.save();
     res.status(200).json({ message: "Signed up successfully" });
   } catch (error) {
-    next(error);
+    next(error.message);
   }
 };
 
@@ -41,7 +41,7 @@ export const signIn = async (req, res, next) => {
     const { password: pass, ...rest } = user._doc;
     return res
       .status(200)
-      .cookie("access_token", token, {
+      .cookie("WealthWise", token, {
         maxAge: 15 * 24 * 60 * 60 * 1000,
       })
       .json(rest);
