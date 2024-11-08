@@ -19,9 +19,13 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  // const [reload,setReload]=useState(0)
+  const [loading, setLoading]=useState(true)
+  const navigate = useNavigate()
   const [notifications, setNotifications] = useState([
     { id: 1, message: "Payment of $200 received", type: "alert", read: false },
     {
@@ -55,6 +59,7 @@ const HomePage = () => {
   // const [autoClose, setAutoClose] = useState(true);
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
+  const [user, setUser] = useState({})
 
 
 
@@ -112,6 +117,7 @@ const HomePage = () => {
       });
       const data = res.data;
       setexpense(data);
+
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -121,7 +127,7 @@ const HomePage = () => {
   const getTransaction = async () => {
     try {
       const res = await axios.get(
-        `/api/transaction/get-all/${currentUser._id}`,
+        `/api/transaction/get-all/${user._id}`,
         { headers: { "Content-type": "application/json" } }
       );
       const data = res.data;
@@ -129,13 +135,39 @@ const HomePage = () => {
       console.log(error);
     }
   };
+  const getUser=()=>{
+    // setUser(JSON.parse(localStorage.getItem('persist:root')).user || '')
+
+      const currentUser = async ()=>{
+        const res = await JSON.parse(localStorage.getItem('persist:root')).user
+        return JSON.parse(res)
+      }
+      currentUser().then((res) =>{ console.log(res.currentUser);setUser(res.currentUser);setLoading(false)}).catch((error) => console.error(error));
+      if(!loading){
+
+        if(!user.name){
+          navigate("/")
+            window.alert("Please sign in to continue");
+        }else{
+       
+          setUser(currentUser);
+       }
+      }
+    
+  }
+    
+    
+    
   useEffect(() => {
     getTransaction();
     getIncome();
     getExpense();
+    getUser();
   }, []);
   return (
     <div className="min-h-screen bg-gray-100 relative">
+      { !loading && 
+      <div>
       <nav className="bg-white shadow-md">
         <div className="container mx-auto px-6 py-3 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-indigo-600">WealthWise</h1>
@@ -158,9 +190,14 @@ const HomePage = () => {
                 </span>
               )}
             </button>
-            <button className="text-gray-600 hover:text-indigo-500 transition duration-300">
-              <LogOut />
-            </button>
+              <button onClick={()=>{
+                console.log('Signout')
+                localStorage.clear()
+                    navigate("/")
+
+              }} className="text-gray-600 hover:text-indigo-500 transition duration-300">
+                <LogOut />
+              </button>
           </div>
         </div>
       </nav>
@@ -359,7 +396,7 @@ const HomePage = () => {
         </div>
       </main>
 
-      {/* Notification Panel */}
+      
       <AnimatePresence>
         {isPanelOpen && (
           <motion.div
@@ -463,6 +500,8 @@ const HomePage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
+      }
     </div>
   );
 };
