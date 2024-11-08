@@ -54,6 +54,8 @@ const HomePage = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [autoClose, setAutoClose] = useState(true);
   const [transactions, setTransactions] = useState({});
+  const [income, setincome] = useState(0)
+  const [expense, setexpense] = useState(0)
 
   useEffect(() => {
     if (isPanelOpen && autoClose) {
@@ -95,6 +97,35 @@ const HomePage = () => {
     );
   };
 
+  const getIncome= async()=>{
+    try {
+      const res=await axios.get('/api/dashboard/get-income', {
+        headers:{
+          'Content-Type':'application/json'
+        }
+      })
+      const data= res.data
+      setincome(data)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getExpense= async()=>{
+    try {
+      const res=await axios.get('/api/dashboard/get-expense', {
+        headers:{
+          'Content-Type':'application/json'
+        }
+      })
+      const data= res.data
+      setexpense(data)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const getTransaction = async () => {
     try {
       const res = await axios.get(
@@ -102,13 +133,14 @@ const HomePage = () => {
         { headers: { "Content-type": "application/json" } }
       );
       const data = res.data;
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getTransaction();
+    getIncome();
+    getExpense();
   }, []);
   return (
     <div className="min-h-screen bg-gray-100 relative">
@@ -154,7 +186,7 @@ const HomePage = () => {
             <h3 className="text-xl font-semibold mb-2 text-gray-700">
               Total Revenue
             </h3>
-            <p className="text-3xl font-bold text-gray-800">$24,500</p>
+            <p className="text-3xl font-bold text-gray-800">${income}</p>
           </div>
           <div
             className="bg-white p-6 rounded-lg shadow-md"
@@ -163,7 +195,7 @@ const HomePage = () => {
           >
             <BarChart2 className="text-4xl text-green-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2 text-gray-700">Profit</h3>
-            <p className="text-3xl font-bold text-gray-800">$8,200</p>
+            <p className="text-3xl font-bold text-gray-800">${income-expense}</p>
           </div>
           <div
             className="bg-white p-6 rounded-lg shadow-md"
@@ -174,7 +206,7 @@ const HomePage = () => {
             <h3 className="text-xl font-semibold mb-2 text-gray-700">
               Expenses
             </h3>
-            <p className="text-3xl font-bold text-gray-800">$16,300</p>
+            <p className="text-3xl font-bold text-gray-800">${expense}</p>
           </div>
           <div
             className="bg-white p-6 rounded-lg shadow-md"
@@ -183,7 +215,7 @@ const HomePage = () => {
           >
             <TrendingUp className="text-4xl text-orange-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2 text-gray-700">Growth</h3>
-            <p className="text-3xl font-bold text-gray-800">+15%</p>
+            <p className="text-3xl font-bold text-gray-800">{}</p>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-6 mb-8">
