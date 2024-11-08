@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   BarChart2,
-  DollarSign,
+  IndianRupee,
   PieChart,
   LogOut,
   TrendingUp,
@@ -20,13 +20,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [notifications, setNotifications] = useState([
-    { id: 1, message: "Payment of $200 received", type: "alert", read: false },
+    { id: 1, message: "Payment of ₹200 received", type: "alert", read: false },
     {
       id: 2,
-      message: "Payment request: $500 from Vendor",
+      message: "Payment request: ₹500 from Vendor",
       type: "paymentRequest",
       read: false,
     },
@@ -55,7 +56,7 @@ const HomePage = () => {
   // const [autoClose, setAutoClose] = useState(true);
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
-
+  const navigate = useNavigate();
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -172,22 +173,11 @@ const HomePage = () => {
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           {/* Revenue, Profit, Expenses, Growth Cards */}
           <div className="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up">
-            <DollarSign className="text-4xl text-indigo-500 mb-4" />
+            <IndianRupee className="text-4xl text-indigo-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2 text-gray-700">
               Total Revenue
             </h3>
-            <p className="text-3xl font-bold text-gray-800">${income}</p>
-          </div>
-          <div
-            className="bg-white p-6 rounded-lg shadow-md"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <BarChart2 className="text-4xl text-green-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2 text-gray-700">Profit</h3>
-            <p className="text-3xl font-bold text-gray-800">
-              ${income - expense}
-            </p>
+            <p className="text-3xl font-bold text-gray-800">₹{income}</p>
           </div>
           <div
             className="bg-white p-6 rounded-lg shadow-md"
@@ -198,7 +188,18 @@ const HomePage = () => {
             <h3 className="text-xl font-semibold mb-2 text-gray-700">
               Expenses
             </h3>
-            <p className="text-3xl font-bold text-gray-800">${expense}</p>
+            <p className="text-3xl font-bold text-gray-800">₹{expense}</p>
+          </div>
+          <div
+            className="bg-white p-6 rounded-lg shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <BarChart2 className="text-4xl text-green-500 mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-700">Profit</h3>
+            <p className="text-3xl font-bold text-gray-800">
+            ₹{income - expense}
+            </p>
           </div>
           <div
             className="bg-white p-6 rounded-lg shadow-md"
@@ -207,7 +208,7 @@ const HomePage = () => {
           >
             <TrendingUp className="text-4xl text-orange-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2 text-gray-700">Growth</h3>
-            <p className="text-3xl font-bold text-gray-800">{}</p>
+            <p className="text-3xl font-bold text-gray-800">₹{expense !== 0 ? `${((income - expense) / expense * 100).toFixed(2)}%` : "0"}</p>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -229,7 +230,7 @@ const HomePage = () => {
                   <tr className="border-b">
                     <td className="p-3">2023-03-15</td>
                     <td className="p-3">Client Payment</td>
-                    <td className="p-3 text-green-500">+$1,200</td>
+                    <td className="p-3 text-green-500">+₹1,200</td>
                     <td className="p-3">
                       <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
                         Completed
@@ -239,7 +240,7 @@ const HomePage = () => {
                   <tr className="border-b">
                     <td className="p-3">2023-03-14</td>
                     <td className="p-3">Office Supplies</td>
-                    <td className="p-3 text-red-500">-$250</td>
+                    <td className="p-3 text-red-500">-₹250</td>
                     <td className="p-3">
                       <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
                         Pending
@@ -249,7 +250,7 @@ const HomePage = () => {
                   <tr>
                     <td className="p-3">2023-03-13</td>
                     <td className="p-3">Freelance Work</td>
-                    <td className="p-3 text-green-500">+$800</td>
+                    <td className="p-3 text-green-500">+₹800</td>
                     <td className="p-3">
                       <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
                         Completed
@@ -280,7 +281,7 @@ const HomePage = () => {
                 <div>
                   <h4 className="font-semibold">Upcoming Payment Due</h4>
                   <p className="text-sm text-gray-600">
-                    You have a payment of $500 due in 3 days.
+                    You have a payment of ₹500 due in 3 days.
                   </p>
                 </div>
               </div>
@@ -301,7 +302,7 @@ const HomePage = () => {
                     <p className="text-sm text-gray-500">Due: March 25, 2023</p>
                   </div>
                 </div>
-                <p className="font-bold text-red-500">$1,500</p>
+                <p className="font-bold text-red-500">₹1,500</p>
               </li>
               <li className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -311,7 +312,7 @@ const HomePage = () => {
                     <p className="text-sm text-gray-500">Due: March 30, 2023</p>
                   </div>
                 </div>
-                <p className="font-bold text-red-500">$250</p>
+                <p className="font-bold text-red-500">₹250</p>
               </li>
             </ul>
           </div>
@@ -356,6 +357,13 @@ const HomePage = () => {
             </div>
           </Link>
         </div>
+
+        <button
+                onClick={() => navigate('/chat')}
+                className="fixed bottom-6 right-6 p-4 text-white bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 rounded-full shadow-lg hover:scale-110 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50">
+
+                🤖 Ask me!
+            </button>
       </main>
 
       {/* Notification Panel */}
