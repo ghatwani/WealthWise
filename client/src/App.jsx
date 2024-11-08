@@ -6,20 +6,13 @@ import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
-<<<<<<< HEAD
-import AddTransaction from './pages/AddTransaction';
-import AddTransactionSuccess from './pages/AddTransactionSuccess';
-import {Toaster} from 'react-hot-toast'
-// import NotificationTestPage from './pages/NotificationTestPage';
-=======
+
 import ChatBot from './pages/Chatbot.jsx';
 import AddTransaction from './pages/AddTransaction';
 // import AddTransactionSuccess from './pages/AddTransactionSuccess';
 import {Toaster} from 'react-hot-toast'
 // import NotificationTestPage from './pages/NotificationTestPage';
 
-
->>>>>>> aa8a321b9f783456aed315940abc92c872a1f17d
 
 function App() {
   useEffect(() => {
