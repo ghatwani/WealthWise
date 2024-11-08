@@ -1,19 +1,40 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, User, Mail, Lock } from 'lucide-react';
+import { toast } from "react-hot-toast";
 
 const SignUpPage = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate=useNavigate()
+  const [formData, setformData] = useState({})
 
-  const handleSubmit = (e) => {
+  const onChangeHandler=(e)=>{
+    setformData({
+      ...formData, [e.target.id]:e.target.value
+    })
+  }
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters long.");
+    // Handle sign in logic here
+   try {
+    const res = await axios.post(`/api/user/signup`, formData, {
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+    const data= res.data
+    if(data.success==false){
+      toast.error(data.message || "Invalid credentials")
       return;
     }
-    console.log('Sign up with:', name, email, password);
+    toast.success("Signed up successfully")
+    navigate('/home')
+    
+   } catch (error) {
+    toast.error('An error occured')
+   }
+    
+   navigate('/signin')
   };
 
   return (
@@ -28,8 +49,7 @@ const SignUpPage = () => {
                 type="text"
                 id="name"
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={onChangeHandler}
                 required
                 aria-label="Full Name"
               />
@@ -43,8 +63,7 @@ const SignUpPage = () => {
                 type="email"
                 id="email"
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={onChangeHandler}
                 required
                 aria-label="Email Address"
               />
@@ -58,8 +77,7 @@ const SignUpPage = () => {
                 type="password"
                 id="password"
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={onChangeHandler}
                 required
                 aria-label="Password"
               />

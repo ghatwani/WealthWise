@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import requestRouter from "./Routes/requests.route.js";
 import dashboardRouter from "./Routes/dashboard.route.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ connectDB(process.env.MONGO_URI);
 //middlewares
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors());
 
 // routes
 app.use("/api/user", userRouter);
