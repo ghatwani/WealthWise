@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import LandingPage from './pages/LandingPage';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import HomePage from './pages/HomePage';
-
-import ChatBot from './pages/Chatbot.jsx';
-import AddTransaction from './pages/AddTransaction';
-// import AddTransactionSuccess from './pages/AddTransactionSuccess';
-import {Toaster} from 'react-hot-toast'
-// import NotificationTestPage from './pages/NotificationTestPage';
-
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import LandingPage from "./pages/LandingPage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import HomePage from "./pages/HomePage";
+import AddTransaction from "./pages/AddTransaction";
+import { Toaster } from "react-hot-toast";
+import ChatBot from "./pages/Chatbot.jsx";
 
 function App() {
   useEffect(() => {
@@ -30,14 +26,9 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
-        <Route path="/add-transaction-success" element={<AddTransactionSuccess />} />
-        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
-        <Route path='/chat' element={<ChatBot/>}/>
-        <Route path="/add-transaction" element={<AddTransaction />} />
-        {/* <Route path="/add-transaction-success" element={<AddTransactionSuccess />} /> */}
-        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
+        <Route path="/chat" element={<ChatBot />} />
       </Routes>
-      <Toaster/>
+      <Toaster />
     </Router>
   );
 }
