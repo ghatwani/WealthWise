@@ -4,6 +4,7 @@ import { errorHandler } from "../utils/error.js";
 export const newTransaction = async (req, res, next) => {
   const { userId, type, amount, description } = req.body;
   try {
+    console.log({ userId, type, amount, description })
     const data = await Transaction.create({
       userId,
       type,

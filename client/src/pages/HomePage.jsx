@@ -56,12 +56,7 @@ const HomePage = () => {
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
 
-  useEffect(() => {
-    if (isPanelOpen && autoClose) {
-      const timer = setTimeout(() => setIsPanelOpen(false), 7000);
-      return () => clearTimeout(timer);
-    }
-  }, [isPanelOpen, autoClose]);
+
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
