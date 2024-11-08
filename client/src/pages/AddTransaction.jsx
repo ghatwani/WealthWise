@@ -421,8 +421,10 @@ import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddTransaction = () => {
+  const navigate = useNavigate()
   // const { userId: paramUserId } = useParams();
   // const currentUserId = useSelector((state) => state.user?.id) || paramUserId;
   const rootData = JSON.parse(localStorage.getItem('persist:root'));
@@ -451,9 +453,12 @@ const AddTransaction = () => {
       console.log(formData)
       const response = await axios.post("/api/transaction/new", formData);
       const data = await response.json();
+      navigate("/home")
       console.log("Transaction added:", data);
     } catch (error) {
       console.error("Error adding transaction:", error);
+      navigate("/home")
+
     }
   };
 
