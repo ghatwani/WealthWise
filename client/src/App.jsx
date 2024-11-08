@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import AddTransaction from "./pages/AddTransaction";
 import { Toaster } from "react-hot-toast";
 import ChatBot from "./pages/Chatbot.jsx";
+import SmartDealPage from "./pages/SmartDealPage.jsx";
 
 function App() {
   useEffect(() => {

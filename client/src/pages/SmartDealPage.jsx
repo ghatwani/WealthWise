@@ -220,7 +220,9 @@ const SmartDealPage = () => {
                           ></div>
                           <span className="ml-2 font-semibold text-gray-700">
                             {resultData.netProfit < 0 ? "Loss: " : "Profit: "} $
-                            {resultData.netProfit}
+                            {resultData.netProfit < 0
+                              ? -1 * resultData.netProfit
+                              : resultData.netProfit}
                           </span>
                         </div>
                       </div>
@@ -269,7 +271,9 @@ const SmartDealPage = () => {
                       {resultData.netProfit < 0 ? "Loss" : "Profit"}
                     </p>
                     <span className="text-2xl font-bold">
-                      ${resultData.netProfit}
+                      {resultData.netProfit < 0
+                        ? -1 * resultData.netProfit
+                        : resultData.netProfit}
                     </span>
                     <p className="text-gray-500">
                       {resultData.profitPercentage.toFixed(1)}% of Income
