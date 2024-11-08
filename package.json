@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.0",
     "nodemon": "^3.1.7",
-    "react-chartjs-2": "^5.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "redux-persist": "^6.0.0"
   }
 }

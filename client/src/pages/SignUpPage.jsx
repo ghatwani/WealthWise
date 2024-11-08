@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, User, Mail, Lock } from 'lucide-react';
 import { toast } from "react-hot-toast";
+import axios from 'axios';
 
 const SignUpPage = () => {
   const navigate=useNavigate()
