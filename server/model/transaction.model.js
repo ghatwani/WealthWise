@@ -1,35 +1,35 @@
 import mongoose from "mongoose";
 function wordLimit(val) {
-    const wordCount = val.split(/\s+/).filter(word => word.length > 0).length;
-    return wordCount <= 50;
-  }
+  const wordCount = val.split(/\s+/).filter((word) => word.length > 0).length;
+  return wordCount <= 50;
+}
 const transactionSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User",
     required: true,
   },
-  type:{
-    type:String,
-    enum:['income', 'expense', 'investment', 'saving'],
+  type: {
+    type: String,
+    enum: ["income", "expense", "investment", "saving"],
     required: true,
   },
-  amount:{
-    type:Number,
-    required:true
-  },
-  description:{
-    type:String,
+  amount: {
+    type: Number,
     required: true,
-    validate:{
-        validator:wordLimit,
-        message:"description cannot exceed 50 words"
+  },
+  description: {
+    type: String,
+    required: true,
+    validate: {
+      validator: wordLimit,
+      message: "description cannot exceed 50 words",
     },
   },
-  createdAt:{
+  createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
-const Transaction =mongoose.model('Transaction', transactionSchema)
+const Transaction = mongoose.model("Transaction", transactionSchema);
 export default Transaction;

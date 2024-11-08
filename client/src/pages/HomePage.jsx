@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const [notifications, setNotifications] = useState([
@@ -51,6 +53,7 @@ const HomePage = () => {
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [autoClose, setAutoClose] = useState(true);
+  const [transactions, setTransactions] = useState({});
 
   useEffect(() => {
     if (isPanelOpen && autoClose) {
@@ -58,6 +61,8 @@ const HomePage = () => {
       return () => clearTimeout(timer);
     }
   }, [isPanelOpen, autoClose]);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -90,6 +95,21 @@ const HomePage = () => {
     );
   };
 
+  const getTransaction = async () => {
+    try {
+      const res = await axios.get(
+        `/api/transaction/get-all/${currentUser._id}`,
+        { headers: { "Content-type": "application/json" } }
+      );
+      const data = res.data;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getTransaction();
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100 relative">
       <nav className="bg-white shadow-md">
