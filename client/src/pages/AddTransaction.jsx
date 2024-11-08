@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const AddTransaction = () => {
-  const { userId: paramUserId } = useParams();
-  const currentUserId = useSelector((state) => state.user?.id) || paramUserId;
-
+  // const { userId: paramUserId } = useParams();
+  // const currentUserId = useSelector((state) => state.user?.id) || paramUserId;
+  const rootData = JSON.parse(localStorage.getItem('persist:root'));
+  const currentUser = JSON.parse(rootData.user);
+  const currentUserId = currentUser.currentUser._id;
   const [formData, setFormData] = useState({
-    userId: currentUserId || "",
+    userId: currentUserId,
     type: "income",
     amount: "",
     description: "",
@@ -28,11 +31,8 @@ const AddTransaction = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/transactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      console.log(formData)
+      const response = await axios.post("/api/transaction/new", formData);
       const data = await response.json();
       console.log("Transaction added:", data);
     } catch (error) {
@@ -49,7 +49,7 @@ const AddTransaction = () => {
           transition={{ duration: 0.8 }}
           className="text-center text-white space-y-4"
         >
-          <h1 className="text-5xl font-bold">Track Your Transactions</h1>
+          <h1 className="text-5xl font-bold">Track Your Transactions <br />{console.log(currentUser)}</h1>
           <p className="text-lg font-light">
             Easily record, manage, and review your financial activities.
           </p>
