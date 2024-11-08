@@ -12,7 +12,9 @@ const app = express();
 const port = 3001 || 3002 || 5000;
 dotenv.config();
 
-connectDB(process.env.MONGO_URI);
+connectDB(
+  "mongodb+srv://dghatwani890:Bqo6ramqXH9T3hDp@cluster0.qz7j6.mongodb.net/"
+);
 
 //middlewares
 app.use(cookieParser());
