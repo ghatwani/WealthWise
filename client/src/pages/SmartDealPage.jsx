@@ -199,7 +199,7 @@ const SmartDealPage = () => {
                             style={{ backgroundColor: "#1e88e5" }}
                           ></div>
                           <span className="ml-2 font-semibold text-gray-700">
-                            Income: ${resultData.income}
+                            Income: ₹{resultData.income}
                           </span>
                         </div>
                         <div className="flex items-center">
@@ -208,7 +208,7 @@ const SmartDealPage = () => {
                             style={{ backgroundColor: "#e53935" }}
                           ></div>
                           <span className="ml-2 font-semibold text-gray-700">
-                            Expenses: ${resultData.expenses}
+                            Expenses: ₹{resultData.expenses}
                           </span>
                         </div>
                         <div className="flex items-center">
@@ -220,7 +220,7 @@ const SmartDealPage = () => {
                             }}
                           ></div>
                           <span className="ml-2 font-semibold text-gray-700">
-                            {resultData.netProfit < 0 ? "Loss: " : "Profit: "} $
+                            {resultData.netProfit < 0 ? "Loss: " : "Profit: "} ₹
                             {resultData.netProfit < 0
                               ? -1 * resultData.netProfit
                               : resultData.netProfit}
@@ -238,7 +238,7 @@ const SmartDealPage = () => {
                       Income
                     </p>
                     <span className="text-2xl font-bold">
-                      ${resultData.income}
+                    ₹{resultData.income}
                     </span>
                     <p className="text-gray-500">100% of Deal</p>
                   </div>
@@ -247,7 +247,7 @@ const SmartDealPage = () => {
                       Expenses
                     </p>
                     <span className="text-2xl font-bold">
-                      ${resultData.expenses}
+                    ₹{resultData.expenses}
                     </span>
                     <p className="text-gray-500">
                       {(
@@ -258,12 +258,12 @@ const SmartDealPage = () => {
                     </p>
                   </div>
                   <div
-                    className={`flex flex-col items-center p-4 border rounded-lg shadow-lg ${
+                    className={`flex flex-col items-center p-4 border rounded-lg shadow-lg ₹{
                       resultData.netProfit < 0 ? "bg-red-50" : "bg-blue-50"
                     }`}
                   >
                     <p
-                      className={`text-lg font-semibold ${
+                      className={`text-lg font-semibold ₹{
                         resultData.netProfit < 0
                           ? "text-red-700"
                           : "text-blue-700"
@@ -272,7 +272,7 @@ const SmartDealPage = () => {
                       {resultData.netProfit < 0 ? "Loss" : "Profit"}
                     </p>
                     <span className="text-2xl font-bold">
-                      {resultData.netProfit < 0
+                    ₹{resultData.netProfit < 0
                         ? -1 * resultData.netProfit
                         : resultData.netProfit}
                     </span>
