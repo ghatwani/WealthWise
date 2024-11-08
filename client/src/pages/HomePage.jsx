@@ -50,14 +50,14 @@ const HomePage = () => {
   ]);
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [autoClose, setAutoClose] = useState(true);
+  // const [autoClose, setAutoClose] = useState(true);
 
-  useEffect(() => {
-    if (isPanelOpen && autoClose) {
-      const timer = setTimeout(() => setIsPanelOpen(false), 7000);
-      return () => clearTimeout(timer);
-    }
-  }, [isPanelOpen, autoClose]);
+  // useEffect(() => {
+  //   if (isPanelOpen && autoClose) {
+  //     const timer = setTimeout(() => setIsPanelOpen(true), 7000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isPanelOpen, autoClose]);
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -125,7 +125,6 @@ const HomePage = () => {
         <h2 className="text-3xl font-bold text-gray-800 mb-6">
           Welcome back, User!
         </h2>
-
         {/* Revenue, Profit, Expenses, Growth */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           {/* Revenue, Profit, Expenses, Growth Cards */}
@@ -243,7 +242,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -299,6 +297,20 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
+        <div
+          className="bg-white p-6 rounded-lg shadow-md mt-8 md:mt-8"
+          data-aos="fade-up"
+        >
+          <Link to="/smart-deal">
+            <div className="flex flex-col items-center justify-center p-4 bg-pink-100 rounded-lg hover:bg-pink-200 transition duration-300">
+              <Zap className="text-pink-500 mb-2" />
+              <span className="text-sm font-semibold">
+                Smart Deal Recommendation
+              </span>
+            </div>
+          </Link>
+        </div>
       </main>
 
       {/* Notification Panel */}
@@ -329,15 +341,15 @@ const HomePage = () => {
               >
                 Mark All as Read
               </button>
-              <label className="text-gray-500 text-sm">
+              {/* <label className="text-gray-500 text-sm">
                 Auto-close
                 <input
                   type="checkbox"
                   checked={autoClose}
-                  onChange={() => setAutoClose(!autoClose)}
+                  onChange={() => setAutoClose(autoClose)}
                   className="ml-2"
                 />
-              </label>
+              </label> */}
             </div>
 
             <ul className="p-6 space-y-4 overflow-y-auto max-h-[80vh]">

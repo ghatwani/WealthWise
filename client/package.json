@@ -14,19 +14,16 @@
     "aos": "^2.3.4",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.6",
     "framer-motion": "^11.11.11",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.454.0",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
+    "react-gauge-chart": "^0.5.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.3.0",
-=======
->>>>>>> aa8a321b9f783456aed315940abc92c872a1f17d
-=======
-    "react-hot-toast": "^2.4.1",
->>>>>>> f4a048f7e130a9887fba9a3bab9c3d1d801d4bbc
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.27.0"
   },

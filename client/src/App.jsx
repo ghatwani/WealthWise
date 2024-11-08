@@ -6,20 +6,9 @@ import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
-<<<<<<< HEAD
 import AddTransaction from './pages/AddTransaction';
-import AddTransactionSuccess from './pages/AddTransactionSuccess';
 import {Toaster} from 'react-hot-toast'
-// import NotificationTestPage from './pages/NotificationTestPage';
-=======
-import ChatBot from './pages/Chatbot.jsx';
-import AddTransaction from './pages/AddTransaction';
-// import AddTransactionSuccess from './pages/AddTransactionSuccess';
-import {Toaster} from 'react-hot-toast'
-// import NotificationTestPage from './pages/NotificationTestPage';
-
-
->>>>>>> aa8a321b9f783456aed315940abc92c872a1f17d
+import SmartDealPage from './pages/SmartDealPage';
 
 function App() {
   useEffect(() => {
@@ -37,12 +26,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
-        <Route path="/add-transaction-success" element={<AddTransactionSuccess />} />
-        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
-        <Route path='/chat' element={<ChatBot/>}/>
-        <Route path="/add-transaction" element={<AddTransaction />} />
-        {/* <Route path="/add-transaction-success" element={<AddTransactionSuccess />} /> */}
-        {/* <Route path="/home" element={<NotificationTestPage />}/> */}
+        <Route path="/smart-deal" element={<SmartDealPage />} />
       </Routes>
       <Toaster/>
     </Router>
