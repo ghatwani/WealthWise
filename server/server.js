@@ -9,7 +9,7 @@ import dashboardRouter from "./Routes/dashboard.route.js";
 import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = 3000 || 3001 || 5000;
 dotenv.config();
 
 connectDB(process.env.MONGO_URI);
