@@ -360,9 +360,9 @@ const HomePage = () => {
 
         <button
                 onClick={() => navigate('/chat')}
-                className="fixed bottom-6 right-6 p-4 text-white bg-green-200 rounded-full shadow-lg hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 transition-transform transform hover:scale-110"
-            >
-                🤖
+                className="fixed bottom-6 right-6 p-4 text-white bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 rounded-full shadow-lg hover:scale-110 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50">
+
+                🤖 Ask me!
             </button>
       </main>
 

@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS CSS
 
 const ChatBot = () => {
     const [message, setMessage] = useState('');
@@ -7,6 +9,14 @@ const ChatBot = () => {
     const [messages, setMessages] = useState([]);
     const [showWelcome, setShowWelcome] = useState(true); // State to control welcome message visibility
     const [showPrompts, setShowPrompts] = useState(true); // State to control sample prompts visibility
+
+    useEffect(() => {
+        AOS.init({
+          duration: 1000,    // Duration of animation
+          easing: 'ease-out-back',  // Easing for smooth transition
+          once: true,        // Make sure animation runs only once
+        });
+    }, []);
 
     const sendMessage = async () => {
         if (message.trim() === '') return;
@@ -38,13 +48,16 @@ const ChatBot = () => {
     return (
         <div className="flex bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 min-h-screen flex-col px-4">
             {/* Chat Header */}
-            <div className="flex justify-between items-center bg-gradient-to-r from-teal-600 via-cyan-700 to-blue-800 text-white p-6 rounded-lg shadow-md mb-4">
+            <div className="flex justify-between items-center bg-gradient-to-r from-teal-600 via-cyan-700 to-blue-800 text-white p-6 rounded-lg shadow-md mb-4" data-aos="fade-down">
                 <h2 className="text-3xl font-extrabold">BudgetBot</h2>
             </div>
 
             {/* Welcome Message in the Center */}
             {showWelcome && (
-                <div className="flex flex-col justify-center items-center flex-1 text-center text-white opacity-90 transform transition duration-500 ease-in-out">
+                <div
+                    className="flex flex-col justify-center items-center flex-1 text-center text-white opacity-90 transform transition duration-500 ease-in-out"
+                    data-aos="fade-up"
+                >
                     <h1 className="text-4xl font-semibold mb-4">Welcome to BudgetBot</h1>
                     <p className="text-lg mb-8">Ask me anything related to managing your budget and finances!</p>
                     <p className="text-sm">Your conversation will begin once you send your first message.</p>
@@ -53,7 +66,7 @@ const ChatBot = () => {
 
             {/* Sample Prompts Section */}
             {showPrompts && (
-                <div className="flex flex-wrap justify-center gap-4 mb-8">
+                <div className="flex flex-wrap justify-center gap-4 mb-8" data-aos="zoom-in">
                     <div
                         className="bg-teal-800 text-white rounded-full py-2 px-4 cursor-pointer hover:bg-teal-700 transition-all"
                         onClick={() => setMessage("How can I manage my monthly expenses?")}
@@ -89,6 +102,7 @@ const ChatBot = () => {
                         className={`chat-bubble p-4 rounded-lg max-w-[75%] ${msg.sender === 'user'
                             ? 'bg-teal-700 text-white self-end rounded-tl-xl transform transition-all shadow-xl'
                             : 'bg-gray-200 text-black self-start rounded-tr-xl transform transition-all shadow-lg'}`}
+                        data-aos={msg.sender === 'user' ? "fade-left" : "fade-right"}
                     >
                         <div className="flex items-center space-x-2">
                             <div
@@ -103,7 +117,7 @@ const ChatBot = () => {
             </div>
 
             {/* Chat Input Section with Gradient Background and Rounded Borders */}
-            <div className="flex justify-between items-center bg-gradient-to-r from-teal-600 via-cyan-700 to-blue-800 text-white p-6 rounded-lg shadow-md mb-4 width-50">
+            <div className="flex justify-between items-center bg-gradient-to-r from-teal-600 via-cyan-700 to-blue-800 text-white p-6 rounded-lg shadow-md mb-4">
                 <input
                     type="text"
                     value={message}
