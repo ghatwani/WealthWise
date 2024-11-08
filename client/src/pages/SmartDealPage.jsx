@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement } from 'chart.js';
+import React, { useState } from "react";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement } from "chart.js";
+
 
 ChartJS.register(ArcElement);
 
 const SmartDealPage = () => {
-  const [income, setIncome] = useState('');
-  const [expenses, setExpenses] = useState('');
-  const [expectedProfit, setExpectedProfit] = useState('');
+  const [income, setIncome] = useState("");
+  const [expenses, setExpenses] = useState("");
+  const [expectedProfit, setExpectedProfit] = useState("");
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isRecommended, setIsRecommended] = useState(false);
@@ -24,7 +25,11 @@ const SmartDealPage = () => {
       const parsedExpenses = parseFloat(expenses);
       const parsedExpectedProfit = parseFloat(expectedProfit);
 
-      if (!isNaN(parsedIncome) && !isNaN(parsedExpenses) && !isNaN(parsedExpectedProfit)) {
+      if (
+        !isNaN(parsedIncome) &&
+        !isNaN(parsedExpenses) &&
+        !isNaN(parsedExpectedProfit)
+      ) {
         const netProfit = parsedIncome - parsedExpenses;
         const profitPercentage = (netProfit / parsedIncome) * 100;
         const meetsExpectation = profitPercentage >= parsedExpectedProfit;
@@ -39,12 +44,12 @@ const SmartDealPage = () => {
         });
 
         setPieData({
-          labels: ['Income', 'Expenses', 'Profit'],
+          labels: ["Income", "Expenses", "Profit"],
           datasets: [
             {
-              label: 'Deal Summary',
+              label: "Deal Summary",
               data: [parsedIncome, parsedExpenses, netProfit],
-              backgroundColor: ['#1e88e5', '#e53935', '#43a047'],
+              backgroundColor: ["#1e88e5", "#e53935", "#43a047"],
             },
           ],
         });
@@ -68,11 +73,29 @@ const SmartDealPage = () => {
       <header className="text-center py-4 bg-gray-200 text-gray-800 fixed top-0 w-full z-10">
         <h3 className="text-xl font-semibold">Smart Deal Recommendation</h3>
         <div className="flex justify-center space-x-6 mt-2">
-          <div className={`${currentStep === 1 ? 'text-blue-600 font-bold' : 'text-gray-500'}`}>1. Enter Details</div>
+          <div
+            className={`${
+              currentStep === 1 ? "text-blue-600 font-bold" : "text-gray-500"
+            }`}
+          >
+            1. Enter Details
+          </div>
           <span className="text-gray-500">→</span>
-          <div className={`${currentStep === 2 ? 'text-blue-600 font-bold' : 'text-gray-500'}`}>2. Generate Recommendation</div>
+          <div
+            className={`${
+              currentStep === 2 ? "text-blue-600 font-bold" : "text-gray-500"
+            }`}
+          >
+            2. Generate Recommendation
+          </div>
           <span className="text-gray-500">→</span>
-          <div className={`${currentStep === 3 ? 'text-blue-600 font-bold' : 'text-gray-500'}`}>3. View Analysis</div>
+          <div
+            className={`${
+              currentStep === 3 ? "text-blue-600 font-bold" : "text-gray-500"
+            }`}
+          >
+            3. View Analysis
+          </div>
         </div>
       </header>
 
@@ -102,7 +125,9 @@ const SmartDealPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-semibold">📈 Expected Profit (%)</label>
+            <label className="block mb-1 font-semibold">
+              📈 Expected Profit (%)
+            </label>
             <input
               type="number"
               placeholder="Enter profit percentage..."
@@ -114,10 +139,12 @@ const SmartDealPage = () => {
           <button
             onClick={handleGenerate}
             className={`py-2 px-4 rounded font-semibold transition ${
-              loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"
             }`}
           >
-            {loading ? 'Calculating...' : 'Generate Recommendation'}
+            {loading ? "Calculating..." : "Generate Recommendation"}
           </button>
         </aside>
 
@@ -126,16 +153,24 @@ const SmartDealPage = () => {
           {loading ? (
             <div className="flex flex-col items-center justify-center text-center">
               <div className="w-16 h-16 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-lg font-semibold text-gray-700">Calculating optimal deal...</p>
+              <p className="mt-4 text-lg font-semibold text-gray-700">
+                Calculating optimal deal...
+              </p>
             </div>
           ) : showResults && resultData ? (
             <div className="w-full max-w-6xl">
-              <h2 className="text-2xl font-bold mb-4 mt-5">Deal Analysis Report</h2>
+              <h2 className="text-2xl font-bold mb-4 mt-5">
+                Deal Analysis Report
+              </h2>
               <p className="text-lg font-semibold mb-4">
                 {isRecommended ? (
-                  <span className="text-green-600 text-xl font-bold">This is a recommended deal! 🎉</span>
+                  <span className="text-green-600 text-xl font-bold">
+                    This is a recommended deal! 🎉
+                  </span>
                 ) : (
-                  <span className="text-red-600 text-xl font-bold">This deal may not meet your profit expectations.</span>
+                  <span className="text-red-600 text-xl font-bold">
+                    This deal may not meet your profit expectations.
+                  </span>
                 )}
               </p>
 
@@ -159,16 +194,37 @@ const SmartDealPage = () => {
                       {/* Legend with Flex Layout for Indications */}
                       <div className="flex justify-start mt-4 gap-6">
                         <div className="flex items-center">
-                          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#1e88e5' }}></div>
-                          <span className="ml-2 font-semibold text-gray-700">Income: ${resultData.income}</span>
+                          <div
+                            className="w-4 h-4 rounded-full"
+                            style={{ backgroundColor: "#1e88e5" }}
+                          ></div>
+                          <span className="ml-2 font-semibold text-gray-700">
+                            Income: ${resultData.income}
+                          </span>
                         </div>
                         <div className="flex items-center">
-                          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#e53935' }}></div>
-                          <span className="ml-2 font-semibold text-gray-700">Expenses: ${resultData.expenses}</span>
+                          <div
+                            className="w-4 h-4 rounded-full"
+                            style={{ backgroundColor: "#e53935" }}
+                          ></div>
+                          <span className="ml-2 font-semibold text-gray-700">
+                            Expenses: ${resultData.expenses}
+                          </span>
                         </div>
                         <div className="flex items-center">
-                          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#43a047' }}></div>
-                          <span className="ml-2 font-semibold text-gray-700">Profit: ${resultData.netProfit}</span>
+                          <div
+                            className="w-4 h-4 rounded-full"
+                            style={{
+                              backgroundColor:
+                                resultData.netProfit < 0 ? "red" : "#43a047",
+                            }}
+                          ></div>
+                          <span className="ml-2 font-semibold text-gray-700">
+                            {resultData.netProfit < 0 ? "Loss: " : "Profit: "} $
+                            {resultData.netProfit < 0
+                              ? -1 * resultData.netProfit
+                              : resultData.netProfit}
+                          </span>
                         </div>
                       </div>
                     </>
@@ -178,29 +234,60 @@ const SmartDealPage = () => {
                 {/* Interactive Cards */}
                 <div className="flex flex-col gap-4 w-1/2">
                   <div className="flex flex-col items-center p-4 border rounded-lg shadow-lg bg-green-50">
-                    <p className="text-lg font-semibold text-green-700">Income</p>
-                    <span className="text-2xl font-bold">${resultData.income}</span>
+                    <p className="text-lg font-semibold text-green-700">
+                      Income
+                    </p>
+                    <span className="text-2xl font-bold">
+                      ${resultData.income}
+                    </span>
                     <p className="text-gray-500">100% of Deal</p>
                   </div>
                   <div className="flex flex-col items-center p-4 border rounded-lg shadow-lg bg-red-50">
-                    <p className="text-lg font-semibold text-red-700">Expenses</p>
-                    <span className="text-2xl font-bold">${resultData.expenses}</span>
+                    <p className="text-lg font-semibold text-red-700">
+                      Expenses
+                    </p>
+                    <span className="text-2xl font-bold">
+                      ${resultData.expenses}
+                    </span>
                     <p className="text-gray-500">
-                      {((resultData.expenses / resultData.income) * 100).toFixed(1)}% of Income
+                      {(
+                        (resultData.expenses / resultData.income) *
+                        100
+                      ).toFixed(1)}
+                      % of Income
                     </p>
                   </div>
-                  <div className="flex flex-col items-center p-4 border rounded-lg shadow-lg bg-blue-50">
-                    <p className="text-lg font-semibold text-blue-700">Profit</p>
-                    <span className="text-2xl font-bold">${resultData.netProfit}</span>
+                  <div
+                    className={`flex flex-col items-center p-4 border rounded-lg shadow-lg ${
+                      resultData.netProfit < 0 ? "bg-red-50" : "bg-blue-50"
+                    }`}
+                  >
+                    <p
+                      className={`text-lg font-semibold ${
+                        resultData.netProfit < 0
+                          ? "text-red-700"
+                          : "text-blue-700"
+                      }`}
+                    >
+                      {resultData.netProfit < 0 ? "Loss" : "Profit"}
+                    </p>
+                    <span className="text-2xl font-bold">
+                      {resultData.netProfit < 0
+                        ? -1 * resultData.netProfit
+                        : resultData.netProfit}
+                    </span>
                     <p className="text-gray-500">
-                      {(resultData.profitPercentage).toFixed(1)}% of Income
+                      {resultData.profitPercentage.toFixed(1)}% of Income
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <p className="text-center text-gray-500 text-lg">Enter deal details and click “Generate Recommendation” to view analysis.</p>
+            <p className="text-center text-gray-500 text-lg">
+              Enter deal details and click “Generate Recommendation” to view
+              analysis.
+            </p>
           )}
         </main>
       </div>

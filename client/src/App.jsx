@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import ChatBot from "./pages/Chatbot.jsx";
 import SmartDealPage from './pages/SmartDealPage';
 
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -27,11 +28,8 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
-
         <Route path="/smart-deal" element={<SmartDealPage />} />
-
         <Route path="/chat" element={<ChatBot />} />
-
       </Routes>
       <Toaster />
     </Router>
