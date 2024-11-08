@@ -8,7 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import AddTransaction from "./pages/AddTransaction";
 import { Toaster } from "react-hot-toast";
-import ChatBot from "./pages/Chatbot.jsx";
+import ChatbotPage from "./pages/ChatbotPage";
 import SmartDealPage from './pages/SmartDealPage';
 
 
@@ -29,7 +29,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
         <Route path="/smart-deal" element={<SmartDealPage />} />
-        <Route path="/chat" element={<ChatBot />} />
+        <Route path="/chat" element={<ChatbotPage />} />
       </Routes>
       <Toaster />
     </Router>
