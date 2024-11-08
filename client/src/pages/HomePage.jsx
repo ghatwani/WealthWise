@@ -53,6 +53,8 @@ const HomePage = () => {
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [autoClose, setAutoClose] = useState(true);
+  const [income, setincome] = useState(0)
+  const [expense, setexpense] = useState(0)
 
   useEffect(() => {
     if (isPanelOpen && autoClose) {
