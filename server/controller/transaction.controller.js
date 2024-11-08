@@ -17,9 +17,10 @@ export const newTransaction = async (req, res, next) => {
 };
 
 export const getAllTransactions = async (req, res, next) => {
-  const userId = req.params.id.toString();
+  const userId = req.params.id;
   try {
     const data = await Transaction.find({ userId });
+
     res.status(200).json(data);
   } catch (error) {
     next(error);
