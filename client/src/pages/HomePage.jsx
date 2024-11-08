@@ -60,8 +60,9 @@ const HomePage = () => {
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
   const [user, setUser] = useState({})
-
-
+  const [transactions,setTransactions]=useState({})
+  const [recentTrans, setRecentTrans]=useState({})
+  const [loggedIn, setLoggedIn]=useState(false)
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -126,11 +127,17 @@ const HomePage = () => {
 
   const getTransaction = async () => {
     try {
-      const res = await axios.get(
-        `/api/transaction/get-all/${user._id}`,
-        { headers: { "Content-type": "application/json" } }
-      );
-      const data = res.data;
+      if(!loading){
+
+        console.log(user._id)
+        const res = await axios.get(
+          `/api/transaction/get-all/${user._id}`,
+          { headers: { "Content-type": "application/json" } }
+        );
+        const data = res.data;
+        console.log(data)
+        
+      }
     } catch (error) {
       console.log(error);
     }
@@ -142,12 +149,28 @@ const HomePage = () => {
         const res = await JSON.parse(localStorage.getItem('persist:root')).user
         return JSON.parse(res)
       }
-      currentUser().then((res) =>{ console.log(res.currentUser);setUser(res.currentUser);setLoading(false)}).catch((error) => console.error(error));
+      currentUser().then((res) =>{ 
+        console.log(res.currentUser);
+        setUser(res.currentUser);
+        setLoading(false);
+        if(res.currentUser.name!==null && res.currentUser.name!==undefined){
+          setLoggedIn(true)
+          console.log(res.currentUser.name)
+          console.log("loggedIn")
+        }else{
+          setLoggedIn(false)
+          console.log("notloggedin")
+          navigate("/")
+          window.alert("Please sign in to continue");
+
+        }
+      }).catch((error) => console.error(error));
       if(!loading){
 
-        if(!user.name){
+        window.location.reload()
+        if(loggedIn==false){
           navigate("/")
-            window.alert("Please sign in to continue");
+          window.alert("Please sign in to continue");
         }else{
        
           setUser(currentUser);
@@ -156,14 +179,15 @@ const HomePage = () => {
     
   }
     
-    
+  useEffect(()=>{
+    getUser();
+  },[])
     
   useEffect(() => {
     getTransaction();
     getIncome();
     getExpense();
-    getUser();
-  }, []);
+  }, [loading]);
   return (
     <div className="min-h-screen bg-gray-100 relative">
       { !loading && 
@@ -193,7 +217,10 @@ const HomePage = () => {
               <button onClick={()=>{
                 console.log('Signout')
                 localStorage.clear()
-                    navigate("/")
+                localStorage.removeItem('persist:root')
+                setLoggedIn(false)    
+                navigate("/")
+                    
 
               }} className="text-gray-600 hover:text-indigo-500 transition duration-300">
                 <LogOut />
