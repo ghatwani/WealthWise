@@ -60,8 +60,8 @@ const HomePage = () => {
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
   const [user, setUser] = useState({})
-  const [transactions,setTransactions]=useState({})
-  const [recentTrans, setRecentTrans]=useState({})
+  const [transactions,setTransactions]=useState()
+  const [recentTrans, setRecentTrans]=useState()
   const [loggedIn, setLoggedIn]=useState(false)
 
   const toggleNotificationPanel = () => {
@@ -136,12 +136,21 @@ const HomePage = () => {
         );
         const data = res.data;
         console.log(data)
+        console.log(data.slice(-3))
+        setTransactions(data)
+        setRecentTrans(data.slice(-3))
+           
         
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getRecentTrans=async ()=>{
+   
+  }
+
   const getUser=()=>{
     // setUser(JSON.parse(localStorage.getItem('persist:root')).user || '')
 
@@ -187,6 +196,7 @@ const HomePage = () => {
     getTransaction();
     getIncome();
     getExpense();
+    getRecentTrans
   }, [loading]);
   return (
     <div className="min-h-screen bg-gray-100 relative">
@@ -281,27 +291,38 @@ const HomePage = () => {
               Recent Transactions
             </h3>
             <div className="overflow-x-auto">
+              {recentTrans && 
+              <div>
+                
+                {console.log("recentTrans :",recentTrans)}
+              </div>
+                
+              }
               <table className="w-full text-left">
                 <thead>
                   <tr className="bg-gray-100">
-                    <th className="p-3">Date</th>
+                   
+                    {/* <th className="p-3">Date</th> */}
                     <th className="p-3">Description</th>
                     <th className="p-3">Amount</th>
                     <th className="p-3">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b">
-                    <td className="p-3">2023-03-15</td>
-                    <td className="p-3">Client Payment</td>
-                    <td className="p-3 text-green-500">+$1,200</td>
-                    <td className="p-3">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
-                        Completed
-                      </span>
-                    </td>
-                  </tr>
-                  <tr className="border-b">
+                {recentTrans && recentTrans.map((trans, index) => (
+                    <tr key={index} className="border-b">
+                      {/* <td className="p-3">{trans.}</td> */}
+                      <td className="p-3">{trans.description}</td>
+                      <td className={`p-3 ${trans.type=='income'?'text-green-500':'text-red-500'}`}>{trans.amount}</td>
+                      <td className="p-3">
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                          Completed
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                 
+                  {/* <tr className="border-b">
                     <td className="p-3">2023-03-14</td>
                     <td className="p-3">Office Supplies</td>
                     <td className="p-3 text-red-500">-$250</td>
@@ -320,7 +341,7 @@ const HomePage = () => {
                         Completed
                       </span>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
