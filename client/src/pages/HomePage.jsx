@@ -21,7 +21,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 
 const HomePage = () => {
   // const [reload,setReload]=useState(0)
@@ -61,8 +60,8 @@ const HomePage = () => {
   const [income, setincome] = useState(0);
   const [expense, setexpense] = useState(0);
   const [user, setUser] = useState({});
-  const [transactions, setTransactions] = useState({});
-  const [recentTrans, setRecentTrans] = useState({});
+  const [transactions, setTransactions] = useState();
+  const [recentTrans, setRecentTrans] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
   const toggleNotificationPanel = () => {
@@ -135,11 +134,17 @@ const HomePage = () => {
         });
         const data = res.data;
         console.log(data);
+        console.log(data.slice(-3));
+        setTransactions(data);
+        setRecentTrans(data.slice(-3));
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getRecentTrans = async () => {};
+
   const getUser = () => {
     // setUser(JSON.parse(localStorage.getItem('persist:root')).user || '')
 
@@ -162,25 +167,20 @@ const HomePage = () => {
         } else {
           setLoggedIn(false);
           console.log("notloggedin");
-          toast.error("Please sign in to continue")
-          navigate("/signin");
-          // window.alert("Please sign in to continue");
+          navigate("/");
+          window.alert("Please sign in to continue");
         }
       })
       .catch((error) => console.error(error));
-      if (!loading && loggedIn === false) {
+    if (!loading) {
+      window.location.reload();
+      if (loggedIn == false) {
         navigate("/");
-        toast.error("Please sign in to continue"); // Replaced window.alert with toast.error
+        window.alert("Please sign in to continue");
+      } else {
+        setUser(currentUser);
       }
-    // if (!loading) {
-    //   window.location.reload();
-    //   if (loggedIn == false) {
-    //     navigate("/");
-    //     window.alert("Please sign in to continue");
-    //   } else {
-    //     setUser(currentUser);
-    //   }
-    // }
+    }
   };
 
   useEffect(() => {
@@ -191,6 +191,7 @@ const HomePage = () => {
     getTransaction();
     getIncome();
     getExpense();
+    getRecentTrans;
   }, [loading]);
   return (
     <div className="min-h-screen bg-gray-100 relative">
@@ -285,7 +286,11 @@ const HomePage = () => {
                 <h3 className="text-xl font-semibold mb-2 text-gray-700">
                   Growth
                 </h3>
-                <p className="text-3xl font-bold text-gray-800">{expense !== 0 ? `₹${((income - expense) / expense * 100).toFixed(2)}%` : "0"}</p>
+                <p className="text-3xl font-bold text-gray-800">
+                  {expense !== 0
+                    ? `₹${(((income - expense) / expense) * 100).toFixed(2)}%`
+                    : "0"}
+                </p>
               </div>
             </div>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -297,46 +302,40 @@ const HomePage = () => {
                   Recent Transactions
                 </h3>
                 <div className="overflow-x-auto">
+                  {recentTrans && (
+                    <div>{console.log("recentTrans :", recentTrans)}</div>
+                  )}
                   <table className="w-full text-left">
                     <thead>
                       <tr className="bg-gray-100">
-                        <th className="p-3">Date</th>
+                        {/* <th className="p-3">Date</th> */}
                         <th className="p-3">Description</th>
                         <th className="p-3">Amount</th>
                         <th className="p-3">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b">
-                        <td className="p-3">2023-03-15</td>
-                        <td className="p-3">Client Payment</td>
-                        <td className="p-3 text-green-500">+₹1,200</td>
-                        <td className="p-3">
-                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
-                            Completed
-                          </span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-3">2023-03-14</td>
-                        <td className="p-3">Office Supplies</td>
-                        <td className="p-3 text-red-500">-₹250</td>
-                        <td className="p-3">
-                          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
-                            Pending
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="p-3">2023-03-13</td>
-                        <td className="p-3">Freelance Work</td>
-                        <td className="p-3 text-green-500">+₹800</td>
-                        <td className="p-3">
-                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
-                            Completed
-                          </span>
-                        </td>
-                      </tr>
+                      {recentTrans &&
+                        recentTrans.map((trans, index) => (
+                          <tr key={index} className="border-b">
+                            {/* <td className="p-3">{trans.}</td> */}
+                            <td className="p-3">{trans.description}</td>
+                            <td
+                              className={`p-3 ${
+                                trans.type == "income"
+                                  ? "text-green-500"
+                                  : "text-red-500"
+                              }`}
+                            >
+                              {trans.amount}
+                            </td>
+                            <td className="p-3">
+                              <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                                Completed
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -455,7 +454,6 @@ const HomePage = () => {
                 </div>
               </Link>
             </div>
-
             <button
               onClick={() => navigate("/chat")}
               className="fixed bottom-6 right-6 p-4 text-white bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 rounded-full shadow-lg hover:scale-110 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
