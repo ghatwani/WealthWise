@@ -5,13 +5,14 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const AddTransaction = () => {
   const navigate = useNavigate()
   // const { userId: paramUserId } = useParams();
   // const currentUserId = useSelector((state) => state.user?.id) || paramUserId;
-  const rootData = JSON.parse(localStorage.getItem('persist:root'));
-  const currentUser = JSON.parse(rootData.user);
+  // const rootData = JSON.parse(localStorage.getItem('persist:root'));
+  const currentUser= useSelector(state=> state.user)
   const currentUserId = currentUser.currentUser._id;
   const [formData, setFormData] = useState({
     userId: currentUserId,
@@ -34,12 +35,19 @@ const AddTransaction = () => {
     e.preventDefault();
     try {
       console.log(formData)
-      const response = await axios.post("/api/transaction/new", formData);
-      const data = await response.json();
+      const response = await axios.post("/api/transaction/new", formData, {
+        headers:{
+          'Content-Type':'application/json'
+        }
+      });
+      const data = await response.data;
       navigate("/home")
+      toast.success('Transaction added!')
       console.log("Transaction added:", data);
     } catch (error) {
-      console.error("Error adding transaction:", error);
+      console.log("Error adding transaction:", error);
+      
+      toast.error('Error adding Transaction')
       navigate("/home")
 
     }
@@ -54,7 +62,7 @@ const AddTransaction = () => {
           transition={{ duration: 0.8 }}
           className="text-center text-white space-y-4"
         >
-          <h1 className="text-5xl font-bold">Track Your Transactions <br />{console.log(currentUser)}</h1>
+          <h1 className="text-5xl font-bold">Track Your Transactions <br /></h1>
           <p className="text-lg font-light">
             Easily record, manage, and review your financial activities.
           </p>
@@ -72,24 +80,7 @@ const AddTransaction = () => {
             Add Transaction
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* User ID */}
-            <div className="relative">
-              <label
-                htmlFor="userId"
-                className="text-[#2C3E50] font-semibold text-lg"
-              >
-                User ID
-              </label>
-              <input
-                type="text"
-                name="userId"
-                id="userId"
-                value={formData.userId}
-                readOnly
-                className="w-full mt-2 p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none bg-gray-100 text-gray-600"
-              />
-            </div>
-
+            
             {/* Transaction Type */}
             <div className="relative">
               <label

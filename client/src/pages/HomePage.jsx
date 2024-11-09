@@ -21,11 +21,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import PaymentItem from "../component/PaymentItem";
 
 const HomePage = () => {
   // const [reload,setReload]=useState(0)
   const [loading, setLoading] = useState(true);
+  const [request, setRequest] = useState([])
   const navigate = useNavigate();
+
+  const currentUser= useSelector(state=> state.user)
+  const userId= currentUser.currentUser._id
+  // console.log(currentUser.currentUser._id)
   const [notifications, setNotifications] = useState([
     { id: 1, message: "Payment of ₹200 received", type: "alert", read: false },
     {
@@ -63,6 +69,17 @@ const HomePage = () => {
   const [transactions, setTransactions] = useState();
   const [recentTrans, setRecentTrans] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const pendingRequest=async()=>{
+    const res= await axios.get(`/api/request/get/${userId}`, {
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+    const data= await res.data
+    setRequest([...request, ...data])
+    console.log("data", data)
+  }
 
   const toggleNotificationPanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -128,7 +145,6 @@ const HomePage = () => {
   const getTransaction = async () => {
     try {
       if (!loading) {
-        console.log(user._id);
         const res = await axios.get(`/api/transaction/get-all/${user._id}`, {
           headers: { "Content-type": "application/json" },
         });
@@ -192,6 +208,7 @@ const HomePage = () => {
     getIncome();
     getExpense();
     getRecentTrans;
+    pendingRequest();
   }, [loading]);
   return (
     <div className="min-h-screen bg-gray-100 relative">
@@ -385,30 +402,12 @@ const HomePage = () => {
                   Pending Payments
                 </h3>
                 <ul className="space-y-4">
-                  <li className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <Calendar className="text-indigo-500 mr-3" />
-                      <div>
-                        <p className="font-semibold">Vendor Invoice #1234</p>
-                        <p className="text-sm text-gray-500">
-                          Due: March 25, 2023
-                        </p>
-                      </div>
-                    </div>
-                    <p className="font-bold text-red-500">₹1,500</p>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <Calendar className="text-indigo-500 mr-3" />
-                      <div>
-                        <p className="font-semibold">Utility Bill</p>
-                        <p className="text-sm text-gray-500">
-                          Due: March 30, 2023
-                        </p>
-                      </div>
-                    </div>
-                    <p className="font-bold text-red-500">₹250</p>
-                  </li>
+                 {
+                  request.length<0 ? "No request to display":
+                  request.map(({description,email, deadline, amount})=>(
+                    <PaymentItem description={description} email={email} deadline={deadline} amount={amount}/>
+                  ))
+                }
                 </ul>
               </div>
 
@@ -461,7 +460,7 @@ const HomePage = () => {
             </div>
             <button
               onClick={() => navigate("/chat")}
-              className="fixed bottom-6 right-6 p-4 text-white bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 rounded-full shadow-lg hover:scale-110 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
+              className="fixed bottom-6 right-6 p-4 text-white bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 rounded-full shadow-lg hover:scale-110 transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
             >
               🤖 Ask me!
             </button>

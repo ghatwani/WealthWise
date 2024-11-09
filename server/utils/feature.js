@@ -14,3 +14,8 @@ export const connectDB = (uri) => {
 const cookieOptions={
 
 }
+
+export default function wordLimit(val) {
+  const wordCount = val.split(/\s+/).filter((word) => word.length > 0).length;
+  return wordCount <= 20;
+}

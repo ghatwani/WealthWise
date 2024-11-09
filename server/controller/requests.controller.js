@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/error.js";
 
 export const createRequest = async (req, res, next) => {
   const { userId } = req.params;
-  const { email, amount, deadline } = req.body;
+  const { email, amount, deadline, description } = req.body;
   try {
     const receiver = await User.findOne({ email });
     if (!receiver) {
@@ -16,7 +16,7 @@ export const createRequest = async (req, res, next) => {
         errorHandler(401, "You can't send payment request to yourself")
       );
     }
-    const newRequest = new Request({ userId, email, amount, deadline });
+    const newRequest = new Request({ userId, email, amount, deadline, description });
     await newRequest.save();
     res.status(200).json({ message: "Request sent successfully" });
   } catch (error) {

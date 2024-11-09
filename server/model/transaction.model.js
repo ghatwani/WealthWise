@@ -1,8 +1,6 @@
+import  wordLimit  from "../utils/feature.js";
 import mongoose from "mongoose";
-function wordLimit(val) {
-  const wordCount = val.split(/\s+/).filter((word) => word.length > 0).length;
-  return wordCount <= 50;
-}
+
 const transactionSchema = new mongoose.Schema({
   userId: {
     type: String,
@@ -26,10 +24,12 @@ const transactionSchema = new mongoose.Schema({
       message: "description cannot exceed 50 words",
     },
   },
-  createdAt: {
+  date: {
     type: Date,
     default: Date.now,
   },
+}, {
+  timestamps:true
 });
 const Transaction = mongoose.model("Transaction", transactionSchema);
 export default Transaction;
