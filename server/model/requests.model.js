@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import wordLimit from "../utils/feature.js";
 
 const requestsSchema = new mongoose.Schema(
   {
@@ -20,8 +21,16 @@ const requestsSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Open",
+      default: "Pending",
     },
+    description:{
+      type:String,
+      validate: {
+        validator: wordLimit,
+        message: "description cannot exceed 20 words",
+      },
+      required:true,
+    }
   },
   { timestamps: true }
 );

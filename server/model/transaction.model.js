@@ -1,8 +1,6 @@
+import  wordLimit  from "../utils/feature.js";
 import mongoose from "mongoose";
-function wordLimit(val) {
-  const wordCount = val.split(/\s+/).filter((word) => word.length > 0).length;
-  return wordCount <= 50;
-}
+
 const transactionSchema = new mongoose.Schema({
   userId: {
     type: String,
