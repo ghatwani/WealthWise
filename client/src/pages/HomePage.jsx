@@ -263,7 +263,7 @@ const HomePage = () => {
                   Profit
                 </h3>
                 <p className="text-3xl font-bold text-gray-800">
-                ₹{income - expense}
+                  ₹{income - expense}
                 </p>
               </div>
               <div
@@ -298,9 +298,14 @@ const HomePage = () => {
                 className="bg-white p-6 rounded-lg shadow-md"
                 data-aos="fade-up"
               >
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  Recent Transactions
-                </h3>
+                <Link to={`/recent-transactions/${user._id}`}>
+                  <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition duration-300">
+                    <FileText className="text-indigo-500 mb-2" />
+                    <span className="text-sm font-semibold">
+                      Recent Transactions
+                    </span>
+                  </div>
+                </Link>
                 <div className="overflow-x-auto">
                   {recentTrans && (
                     <div>{console.log("recentTrans :", recentTrans)}</div>
@@ -308,7 +313,7 @@ const HomePage = () => {
                   <table className="w-full text-left">
                     <thead>
                       <tr className="bg-gray-100">
-                        {/* <th className="p-3">Date</th> */}
+                        <th className="p-3">Date</th>
                         <th className="p-3">Description</th>
                         <th className="p-3">Amount</th>
                         <th className="p-3">Status</th>
@@ -318,7 +323,7 @@ const HomePage = () => {
                       {recentTrans &&
                         recentTrans.map((trans, index) => (
                           <tr key={index} className="border-b">
-                            {/* <td className="p-3">{trans.}</td> */}
+                            <td className="p-3">{trans.date}</td>
                             <td className="p-3">{trans.description}</td>
                             <td
                               className={`p-3 ${
@@ -377,7 +382,7 @@ const HomePage = () => {
                 data-aos="fade-up"
               >
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  Upcoming Payments
+                  Pending Payments
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-center justify-between">
@@ -418,7 +423,7 @@ const HomePage = () => {
                   <Link to="/add-transaction">
                     <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition duration-300">
                       <CreditCard className="text-indigo-500 mb-2" />
-                      <span className="text-sm font-semibold">Add Payment</span>
+                      <span className="text-sm font-semibold">Add Transaction</span>
                     </div>
                   </Link>
                   <button className="flex flex-col items-center justify-center p-4 bg-green-100 rounded-lg hover:bg-green-200 transition duration-300">

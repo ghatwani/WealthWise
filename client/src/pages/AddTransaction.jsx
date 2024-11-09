@@ -106,8 +106,8 @@ const AddTransaction = () => {
                 required
                 className="w-full mt-2 p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-[#3498DB] focus:outline-none"
               >
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
               </select>
             </div>
 

@@ -99,7 +99,7 @@ const ChatBot = () => {
             )}
 
             {/* Chat Messages Section */}
-            <div className="flex-1 overflow-auto p-4 space-y-6 flex flex-col-reverse">
+            <div className="flex-1 overflow-auto p-4 space-y-6 flex flex-col">
                 {messages.map((msg, index) => (
                     <div
                         key={index}

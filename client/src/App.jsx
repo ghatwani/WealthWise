@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import ChatBot from "./pages/ChatbotPage.jsx";
 import SmartDealPage from './pages/SmartDealPage';
 import NotFound from "./pages/NotFound.jsx";
+import RecentTransactions from "./pages/RecentTransactions"
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/smart-deal" element={<SmartDealPage />} />
         <Route path="/chat" element={<ChatBot />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/recent-transactions/:userid?" element={<RecentTransactions />} />
 
       </Routes>
       <Toaster />
