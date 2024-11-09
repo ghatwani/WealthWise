@@ -15,13 +15,13 @@ const PaymentRequest = () => {
         console.log(data)
     }
     const fetchReceived=async()=>{
-        
+
     }
 
-    useEffect(() => {
-     fetchSentRequest()
+    // useEffect(() => {
+    //  fetchSentRequest()
 
-    }, [])
+    // }, [])
 
     const handleData=async()=>{
         if(req==='sent'){
