@@ -34,7 +34,11 @@ const ChatBot = () => {
         setMessage('');
 
         try {
-            const res = await axios.post('https://8f36-34-41-123-25.ngrok-free.app/chat', { message });
+            const res = await axios.post('http://127.0.0.1:5000/chat', { message }, {
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            });
             const botMessage = { text: res.data.response, sender: 'bot' };
             setMessages([...messages, userMessage, botMessage]);
             setResponse(res.data.response);
