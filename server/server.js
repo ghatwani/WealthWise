@@ -1,11 +1,11 @@
 import express from "express";
 import { connectDB } from "./utils/feature.js";
-import userRouter from "./Routes/user.route.js";
-import TransactionRouter from "./Routes/transaction.route.js";
+import userRouter from "./routes/user.route.js";
+import TransactionRouter from "./routes/transaction.route.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import requestRouter from "./Routes/requests.route.js";
-import dashboardRouter from "./Routes/dashboard.route.js";
+import requestRouter from "./routes/requests.route.js";
+import dashboardRouter from "./routes/dashboard.route.js";
 import cors from "cors";
 
 const app = express();
