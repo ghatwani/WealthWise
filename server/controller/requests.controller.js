@@ -69,3 +69,16 @@ export const deleteRequest = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const sentRequest =async(req, res , next)=>{
+  const user= req.user
+  console.log(user)
+  try {
+    const data= await Request.find({userId:user})
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}

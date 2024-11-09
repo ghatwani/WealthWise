@@ -404,8 +404,8 @@ const HomePage = () => {
                 <ul className="space-y-4">
                  {
                   request.length<0 ? "No request to display":
-                  request.map(({description,email, deadline, amount})=>(
-                    <PaymentItem description={description} email={email} deadline={deadline} amount={amount}/>
+                  request.map(({description,email, deadline, amount, _id})=>(
+                    <PaymentItem key={_id} description={description} email={email} deadline={deadline} amount={amount}/>
                   ))
                 }
                 </ul>

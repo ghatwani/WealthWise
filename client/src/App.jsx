@@ -12,6 +12,7 @@ import ChatBot from "./pages/ChatbotPage.jsx";
 import SmartDealPage from './pages/SmartDealPage';
 import NotFound from "./pages/NotFound.jsx";
 import RecentTransactions from "./pages/RecentTransactions"
+import PaymentRequest from "./pages/PaymentRequest.jsx";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/chat" element={<ChatBot />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/recent-transactions/:userid?" element={<RecentTransactions />} />
+        <Route path="/payment-request" element={<PaymentRequest/>}/>
 
       </Routes>
       <Toaster />
