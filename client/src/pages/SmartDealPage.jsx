@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement } from "chart.js";
+import Navbar from "../component/Navbar";
 
 
 ChartJS.register(ArcElement);
@@ -69,8 +70,9 @@ const SmartDealPage = () => {
 
   return (
     <div className="flex flex-col font-sans">
+      <Navbar bgColor="bg-gray-200"/>
       {/* Header */}
-      <header className="text-center py-4 bg-gray-200 text-gray-800 fixed top-0 w-full z-10">
+      <header className="text-center py-4 bg-gray-200 text-gray-800 w-full z-10">
         <h3 className="text-xl font-semibold">Smart Deal Recommendation</h3>
         <div className="flex justify-center space-x-6 mt-2">
           <div
@@ -100,7 +102,7 @@ const SmartDealPage = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex h-screen pt-20">
+      <div className="flex h-screen pt-0">
         {/* Sidebar for Input */}
         <aside className="w-1/4 bg-gray-800 text-white p-6 flex flex-col">
           <h4 className="text-lg font-semibold mb-4">Enter Deal Details</h4>
@@ -159,7 +161,7 @@ const SmartDealPage = () => {
             </div>
           ) : showResults && resultData ? (
             <div className="w-full max-w-6xl">
-              <h2 className="text-2xl font-bold mb-4 mt-5">
+              <h2 className="text-2xl font-bold mb-4 mt-0">
                 Deal Analysis Report
               </h2>
               <p className="text-lg font-semibold mb-4">
