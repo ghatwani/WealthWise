@@ -11,7 +11,7 @@ import path from "path";
 
 const __dirname=path.resolve();
 const app = express();
-const port = 3001;
+const port = 5000;
 dotenv.config();
 
 connectDB(process.env.MONGO_URI);
