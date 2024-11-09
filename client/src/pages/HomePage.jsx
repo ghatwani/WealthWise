@@ -128,7 +128,6 @@ const HomePage = () => {
   const getTransaction = async () => {
     try {
       if (!loading) {
-        console.log(user._id);
         const res = await axios.get(`/api/transaction/get-all/${user._id}`, {
           headers: { "Content-type": "application/json" },
         });

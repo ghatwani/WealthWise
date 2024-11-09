@@ -26,10 +26,12 @@ const transactionSchema = new mongoose.Schema({
       message: "description cannot exceed 50 words",
     },
   },
-  createdAt: {
+  date: {
     type: Date,
     default: Date.now,
   },
+}, {
+  timestamps:true
 });
 const Transaction = mongoose.model("Transaction", transactionSchema);
 export default Transaction;
