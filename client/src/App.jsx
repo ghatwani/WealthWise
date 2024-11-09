@@ -13,7 +13,6 @@ import SmartDealPage from './pages/SmartDealPage';
 import NotFound from "./pages/NotFound.jsx";
 import RecentTransactions from "./pages/RecentTransactions"
 import Reports from "./pages/Reports"
-import PaymentRequest from "./pages/PaymentRequest.jsx";
 
 
 function App() {
