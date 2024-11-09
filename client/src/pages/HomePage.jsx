@@ -323,7 +323,7 @@ const HomePage = () => {
                       {recentTrans &&
                         recentTrans.map((trans, index) => (
                           <tr key={index} className="border-b">
-                            <td className="p-3">{trans.date}</td>
+                            <td className="p-3">{trans.Date}</td>
                             <td className="p-3">{trans.description}</td>
                             <td
                               className={`p-3 ${
