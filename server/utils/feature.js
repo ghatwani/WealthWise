@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 export const connectDB = (uri) => {
-  mongoose
-    .connect(uri, { dbName: "WealthWise" })
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    connectTimeoutMS: 30000, // sets connection timeout to 30 seconds
+    socketTimeoutMS: 45000   // sets socket timeout to 45 seconds
+  })
     .then((data) => {
       console.log(`connected to DB ${data.connection.host}`);
     })
